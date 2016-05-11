@@ -56,7 +56,7 @@ class SofaBase(object):
     def get(self, model):
         bucket = self.get_bucket(model.__bucket__)
         for key, value in bucket.get(model.primary_key.value).value.items():
-            setattr(model, key, value)
+            getattr(model, key).value = value
         return model
         
     def get_bucket(self, bucket_name):
