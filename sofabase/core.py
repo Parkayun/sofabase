@@ -15,9 +15,10 @@ class Model(object):
     def get_document(self):
         document = {}
         for name, field in self.__fields__.items():
-            if field.is_key or not field.validate():
-                continue
-            document[name] = field.value
+            if field.validate():
+                if field.is_key:
+                    continue
+                document[name] = field.value
         return document
 
     def setup_fields(self, fields):
