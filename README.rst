@@ -42,7 +42,7 @@ Quick start
    db.add(user)
    
    # Update
-   user.something = 'world hello'
+   user.something.value = 'world hello'
    db.set(user)
    
    # Read
