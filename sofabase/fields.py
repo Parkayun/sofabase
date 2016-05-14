@@ -22,8 +22,8 @@ class BaseField(object):
         return self.__value__
 
     @value.setter
-    def value(self, _value):
-        self.__value__ = _value
+    def value(self, value_):
+        self.__value__ = value_
 
     def validate(self):
         return True
@@ -56,10 +56,10 @@ class NumberField(BaseField):
 class PasswordField(BaseField):
 
     @BaseField.value.setter
-    def value(self, _value):
-        if isinstance(_value, str):
-            _value = _value.encode('utf-8')
-        self.__value__ = sha256(_value).hexdigest()
+    def value(self, value_):
+        if isinstance(value_, str):
+            value_ = value_.encode('utf-8')
+        self.__value__ = sha256(value_).hexdigest()
 
 
 class DateTimeField(BaseField):
