@@ -17,10 +17,10 @@ class Model(object):
     def get_document(self):
         document = {}
         for name, field in self.__fields__.items():
-            if field.validate():
-                if field.is_key:
-                    continue
-                document[name] = field.value
+            field.validate()
+            if field.is_key:
+                continue
+            document[name] = field.get_string()
         return document
 
     def setup_fields(self, fields):

@@ -28,6 +28,9 @@ class BaseField(object):
     def validate(self):
         return True
 
+    def get_string(self):
+        return self.__value__.__str__()
+
 
 class TextField(BaseField):
     
