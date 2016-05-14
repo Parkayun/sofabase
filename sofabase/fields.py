@@ -66,5 +66,5 @@ class DateTimeField(BaseField):
 
     def validate(self):
         if not isinstance(self.value, datetime):
-            raise ValidateError('value shoulde be datetime type.')
+            raise ValidateError('value should be datetime type.')
         super(DateTimeField, self).validate()
