@@ -1,3 +1,4 @@
+from datetime import datetime
 from hashlib import sha256
 
 
@@ -56,3 +57,9 @@ class PasswordField(BaseField):
         self.__value__ = sha256(_value).hexdigest()
 
 
+class DateTimeField(BaseField):
+
+    def validate(self):
+        if not isinstance(self.value, datetime):
+            raise Exception('Validation Error')
+        super(DateTimeField, self).validate()
