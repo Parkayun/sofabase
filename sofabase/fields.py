@@ -8,7 +8,8 @@ class BaseField(object):
 
     __value__ = None
     
-    def __init__(self, is_key=False, *args, **kwargs):
+    def __init__(self, default=None, is_key=False, *args, **kwargs):
+        self.default = default
         self.is_key = is_key
 
     def __str__(self):
@@ -19,6 +20,8 @@ class BaseField(object):
 
     @property
     def value(self):
+        if not self.__value__ and self.default:
+            return self.default() if hasattr(self.default, '__call__') else self.default
         return self.__value__
 
     @value.setter
@@ -29,6 +32,9 @@ class BaseField(object):
         return True
 
     def get_string(self):
+        if not self.__value__ and self.default:
+            default = self.default() if hasattr(self.default, '__call__') else self.default
+            return default.__str__()
         return self.__value__.__str__()
 
 
@@ -65,6 +71,6 @@ class PasswordField(BaseField):
 class DateTimeField(BaseField):
 
     def validate(self):
-        if not isinstance(self.value, datetime):
+        if self.value and not isinstance(self.value, datetime):
             raise ValidateError('value should be datetime type.')
         super(DateTimeField, self).validate()
