@@ -1,6 +1,8 @@
 from datetime import datetime
 from hashlib import sha256
 
+from .exceptions import ValidateError
+
 
 class BaseField(object):
 
@@ -37,7 +39,7 @@ class TextField(BaseField):
 
     def validate(self):
         if self.max_length and self.max_length < len(self.value):
-            raise Exception('Validation Error: max_legnth')
+            raise ValidateError('length should be under %s.' % self.max_length)
         super(TextField, self).validate()
 
 
@@ -61,5 +63,5 @@ class DateTimeField(BaseField):
 
     def validate(self):
         if not isinstance(self.value, datetime):
-            raise Exception('Validation Error')
+            raise ValidateError('value shoulde be datetime type.')
         super(DateTimeField, self).validate()
