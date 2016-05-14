@@ -32,10 +32,7 @@ class BaseField(object):
         return True
 
     def get_string(self):
-        if not self.__value__ and self.default:
-            default = self.default() if hasattr(self.default, '__call__') else self.default
-            return default.__str__()
-        return self.__value__.__str__()
+        return self.value.__str__()
 
 
 class TextField(BaseField):
