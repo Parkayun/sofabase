@@ -1,5 +1,7 @@
 from couchbase.bucket import Bucket
+from couchbase.exceptions import KeyExistsError as KeyExistsError_
 
+from .exceptions import KeyExistsError
 from .fields import BaseField
 
 
@@ -48,7 +50,10 @@ class SofaBase(object):
     def add(self, model):
         bucket = self.get_bucket(model.__bucket__)
         document = model.get_document()
-        bucket.insert(model.primary_key.value, document)
+        try:
+            bucket.insert(model.primary_key.value, document)
+        except KeyExistsError_:
+            raise KeyExistsError
 
     def delete(self, model):
         bucket = self.get_bucket(model.__bucket__)
