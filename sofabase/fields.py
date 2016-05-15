@@ -71,3 +71,15 @@ class DateTimeField(BaseField):
         if self.value and not isinstance(self.value, datetime):
             raise ValidateError('value should be datetime type.')
         super(DateTimeField, self).validate()
+
+
+class JsonField(BaseField):
+
+    def __init__(self, scheme, *args, **kwargs):
+        self.is_key = False
+        self.scheme = scheme
+
+    def validate(self):
+        for key, value in self.value.items():
+            if isinstance(value, dict):
+                pass
