@@ -83,3 +83,11 @@ class JsonField(BaseField):
         for key, value in self.value.items():
             if isinstance(value, dict):
                 pass
+
+
+class BooleanField(BaseField):
+
+    def validate(self):
+        if self.value and not isinstance(self.value, bool):
+            raise ValidateError('value should be bool type.')
+        super(BooleanField, self).validate()
