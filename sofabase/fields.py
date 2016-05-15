@@ -18,11 +18,14 @@ class BaseField(object):
     def __repr__(self):
         return self.__str__()
 
-    @property
-    def value(self):
+    def get_value_or_default(self):
         if not self.__value__ and self.default:
             return self.default() if hasattr(self.default, '__call__') else self.default
         return self.__value__
+
+    @property
+    def value(self):
+        return self.get_value_or_default()
 
     @value.setter
     def value(self, value_):
@@ -66,6 +69,10 @@ class PasswordField(BaseField):
 
 
 class DateTimeField(BaseField):
+
+    def get_value_or_default(self):
+        value = super(DateTimeField, self).get_value_or_default()
+        return datetime.strptime(value, '%Y-%m-%d %H:%M:%S.%f')
 
     def validate(self):
         if self.value and not isinstance(self.value, datetime):
