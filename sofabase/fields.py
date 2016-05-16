@@ -72,6 +72,8 @@ class DateTimeField(BaseField):
 
     def get_value_or_default(self):
         value = super(DateTimeField, self).get_value_or_default()
+        if isinstance(value, datetime):
+            return value
         return datetime.strptime(value, '%Y-%m-%d %H:%M:%S.%f')
 
     def validate(self):
