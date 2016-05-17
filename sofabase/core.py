@@ -1,7 +1,7 @@
 from couchbase.bucket import Bucket
 from couchbase.exceptions import KeyExistsError as KeyExistsError_
 
-from .exceptions import KeyExistsError
+from .exceptions import KeyExistsError, NotExistsError
 from .fields import BaseField
 
 
@@ -12,7 +12,8 @@ class Model(object):
     __fields__ = {}
     
     def __init__(self, *args, **kwargs):
-        self.setup_fields(kwargs)
+        self.__kwargs__ = kwargs
+        self.setup_fields()
 
     def get_document(self):
         document = {}
@@ -23,7 +24,8 @@ class Model(object):
             document[name] = field.get_string()
         return document
 
-    def setup_fields(self, fields):
+    def setup_fields(self):
+        fields = self.__kwargs__
         field_names = fields.keys()
 
         for name in dir(self):
@@ -62,6 +64,8 @@ class SofaBase(object):
     def get(self, model):
         bucket = self.get_bucket(model.__bucket__)
         for key, value in bucket.get(model.primary_key.value).value.items():
+            if key in model.__kwargs__ and value != model.__kwargs__.get(key):
+                raise NotExistsError
             getattr(model, key).value = value
         return model
         
