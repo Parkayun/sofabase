@@ -7,7 +7,7 @@ from .exceptions import ValidateError
 class BaseField(object):
 
     __value__ = None
-    
+
     def __init__(self, default=None, is_key=False, *args, **kwargs):
         self.default = default
         self.is_key = is_key
@@ -39,7 +39,7 @@ class BaseField(object):
 
 
 class TextField(BaseField):
-    
+
     max_length = None
 
     def __init__(self, max_length=None, *args, **kwargs):
@@ -53,7 +53,7 @@ class TextField(BaseField):
 
 
 class NumberField(BaseField):
-    
+
     @property
     def value(self):
         return str(self.__value__)

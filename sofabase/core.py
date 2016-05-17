@@ -10,7 +10,7 @@ class Model(object):
     __bucket__ = ''
     __primary_key_field__ = ''
     __fields__ = {}
-    
+
     def __init__(self, *args, **kwargs):
         self.__kwargs__ = kwargs
         self.setup_fields()
@@ -48,7 +48,7 @@ class SofaBase(object):
 
     def __init__(self, base_host):
         self.base_host = base_host if base_host.endswith('/') else ''.join((base_host, '/'))
-    
+
     def add(self, model):
         bucket = self.get_bucket(model.__bucket__)
         document = model.get_document()
@@ -68,7 +68,7 @@ class SofaBase(object):
                 raise NotExistsError
             getattr(model, key).value = value
         return model
-        
+
     def get_bucket(self, bucket_name):
         if bucket_name not in self.buckets:
             host = ''.join((self.base_host, bucket_name))
