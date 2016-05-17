@@ -12,7 +12,7 @@ Should install via Github.
 
 .. sourcecode:: bash
 
-   ~ $ pip install git+https://github.com/Parkayun/sofabse.git
+   ~ $ pip install git+https://github.com/Parkayun/sofabase.git
 
 
 Quick start
