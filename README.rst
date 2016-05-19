@@ -23,7 +23,7 @@ Quick start
 
    from datetime import datetime
    from sofabase import SofaBase, Model
-   from sofabse.fields import TextField, PasswordField
+   from sofabase.fields import TextField, PasswordField
 
 
    db = SofaBase('couchbase://localhost/')
